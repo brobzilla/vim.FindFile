@@ -1,0 +1,65 @@
+created by
+William Lee
+ 
+script type
+utility
+ 
+description
+Somewhat similar to locate on Unix, FindFile allows you open a file quickly by typing in its file name.  You can use :FC to generate the cache of all files in a directory recursively, then using :FF will open a buffer that can autocomplete on the filenames that are cached.  Pressing <Enter> will open the file.   
+
+This is a pure vim implementation and the cache is stored in memory using a vim dictionary.  It should work on both Windows and Unix. 
+
+See http://wlee.net/FindFile.swf.html for details.
+ 
+install details
+Put this file in your ~/.vim/plugin directory. 
+If you are working on a project, go to the root directory of the project, 
+then execute: 
+
+    :FindFileCache .<CR> 
+    or 
+    :FC .<CR> 
+
+This will recursively parse the directory and create the internal cache. 
+
+You can also put in multiple arguments in :FC: 
+
+    :FC /dir1 /dir2 /dir3 
+
+You can add to the cache by calling :FC again.  File with the same path 
+will not be added to the cache twice. 
+
+To find a file: 
+
+    :FindFile<CR> 
+    or 
+    :FF<CR> 
+
+This opens a scratch buffer that you can type in the file name.  Press 
+<Esc> will quit the buffer, while <Enter> will select and edit the file. 
+
+This will split the window and open the file in the newly split window: 
+
+    :FindFileSplit<CR> 
+    or 
+    :FS<CR> 
+
+To clear the internal cache, do: 
+
+    :FindFileCacheClear<CR> 
+    or 
+    :FCC<CR> 
+
+
+You can put the following lines in your ~/.vimrc in order to invoke 
+FindFile quickly by hitting <C-f>: 
+
+    nmap <C-f> :FindFile<CR> 
+    nmap <C-s> :FindFileSplit<CR> 
+
+
+By default, all the *.o, *.pyc, and */tmp/* files will be ignored, in 
+addition to the wildignore patterns.  You can customize this by setting in 
+your .vimrc: 
+
+    let g:FindFileIgnore = ['*.o', '*.pyc', '*/tmp/*'] 
